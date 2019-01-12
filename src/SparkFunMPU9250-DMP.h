@@ -90,6 +90,8 @@ public:
 	// FIFO: 50 Hz, disabled
 	// Output: INV_SUCCESS (0) on success, otherwise error
 	inv_error_t begin(void);
+
+    inv_error_t lowPowerInterrupt(unsigned short thresh, unsigned char time, unsigned short lpa_freq);
 	
 	// setSensors(unsigned char) -- Turn on or off MPU-9250 sensors. Any of the 
 	// following defines can be combined: INV_XYZ_GYRO, INV_XYZ_ACCEL, 
@@ -172,6 +174,8 @@ public:
 	//  in single-conversion mode.)
 	// Output: true if new accel/gyro data is available
 	bool dataReady();
+
+	bool womInt();
 	
 	// update -- Reads latest data from the MPU-9250's data registers.
 	// Sensors to be updated can be set using the [sensors] parameter.

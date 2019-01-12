@@ -58,6 +58,11 @@ inv_error_t MPU9250_DMP::begin(void)
 	return result;
 }
 
+inv_error_t MPU9250_DMP::lowPowerInterrupt(unsigned short thresh, unsigned char time, unsigned short lpa_freq)
+{
+  return mpu_lp_motion_interrupt(thresh, time, lpa_freq);
+}
+
 inv_error_t MPU9250_DMP::enableInterrupt(unsigned char enable)
 {
 	return set_int_enable(enable);
@@ -286,6 +291,17 @@ bool MPU9250_DMP::dataReady()
 	if (mpu_read_reg(MPU9250_INT_STATUS, &intStatusReg) == INV_SUCCESS)
 	{
 		return (intStatusReg & (1<<INT_STATUS_RAW_DATA_RDY_INT));
+	}
+	return false;
+}
+
+bool MPU9250_DMP::womInt()
+{
+	unsigned char intStatusReg;
+
+	if (mpu_read_reg(MPU9250_INT_STATUS, &intStatusReg) == INV_SUCCESS)
+	{
+		return (intStatusReg & (1<<INT_STATUS_WOM_INT));
 	}
 	return false;
 }

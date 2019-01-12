@@ -32,7 +32,7 @@ void logString(char * string)
 {
 }
 
-int _MLPrintLog (int priority, const char* tag, const char* fmt, ...)
+void _MLPrintLog (int priority, const char* tag, const char* fmt, ...)
 {
 }
 

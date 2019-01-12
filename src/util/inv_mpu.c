@@ -44,11 +44,11 @@
 #define i2c_read(a, b, c, d)  arduino_i2c_read(a, b, c, d)
 #define delay_ms  arduino_delay_ms
 #define get_ms    arduino_get_clock_ms
-#define log_i     _MLPrintLog
-#define log_e     _MLPrintLog 
+#define log_i(...) (void)0
+#define log_e(...) (void)0
 static inline int reg_int_cb(struct int_param_s *int_param)
 {
-	
+  return 0;
 }
 
 #if !defined MPU6050 && !defined MPU9150 && !defined MPU6500 && !defined MPU9250
@@ -3159,7 +3159,7 @@ int mpu_lp_motion_interrupt(unsigned short thresh, unsigned char time,
 
         /* Enable motion interrupt (MPU6500 version). */
         data[0] = BITS_WOM_EN;
-        if (i2c_write(st.hw->addr, st.reg->accel_intel, 1, data))
+        if (i2c_write(st.hw->addr, st.reg->accel_intel, 1, data)) // MOT_DETECT_CTRL
             goto lp_int_restore;
 
         /* Enable cycle mode. */
@@ -3219,4 +3219,3 @@ lp_int_restore:
 /**
  *  @}
  */
-
